@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="fontawesome-all.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Meme Generator</title>
+</head>
+
+<body onload="init()">
+
+    <header>
+        <div class="containers header-container flex space-between align-center">
+            <button class="back" onclick="goBack()">&#8592;</button>
+            <h1>The Ultimate Meme Generator</h1>
+
+
+            <nav>
+                <i class="fa fa-bars humburger" onclick="toggleMenu()"></i>
+
+                <ul class="main-menu clean-list flex">
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#gallery">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="gallery">
+            <div class="gallery-container container flex column space-between">
+                <div class="filter">Choose Your Meme!
+                    <input class="input" list="keywords" oninput="setFilter(this.value)">
+                    <datalist id="keywords">
+
+                    </datalist>
+                </div>
+                <div class="upload">
+                    <input id="fileInput" type="file" onchange="handleUpload()" />
+                </div>
+                <div class="gallery flex flex-wrap">
+
+                </div>
+                <div class="keywords">
+                    <ul class="keywords-list clean-list flex flex-wrap">
+                        <li>
+
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div id="about">
+            <div class="about">
+                <h3>About Me</h3>
+
+                <ul class="details clean-list flex align-center">
+                    <li>
+                        <img src="img/me.jpg">
+                    </li>
+
+                    <li>
+                        <p>
+                            Hi! , I'm Shiran, from Tel Aviv - Israel. Passionate for design and new technologies.
+                            <br> 3+ years experiance as systems analyst and project manager
+                            <br> Currently studing Front-end development at "Coding Acadamy"
+                        </p>
+                    </li>
+                </ul>
+                <div class="social-network flex center">
+                    <div class="facebook flex align-center">
+                        <a href="https://www.facebook.com/shiran.zelnir">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                    <div class="linkedin flex align-center space-evenly">
+                        <a href="https://www.linkedin.com/in/shiranzelnir/">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contact">
+            <div class="contact container flex column space-evenly align-center">
+                <h3>Contact Me
+                </h3>
+                <div class="flex align-center">
+                    Your Email
+                    <input class="email" type="email" placeholder="name@example.com">
+                </div>
+
+
+                <textarea class="msg" rows="4" cols="50" placeholder="Type your message"></textarea>
+                <button type="submit" onclick="onSubmit(event)">Submit</button>
+            </div>
+
+
+
+        </div>
+
+
+    </main>
+
+    <div class="meme-container">
+        <div class="meme-item container flex align-center space-around flex-wrap">
+            <div class="canvas-container">
+                <canvas id="myCanvas" width="500" height="400" onclick="handleClick(event)">
+
+                </canvas>
+            </div>
+
+            <div class="control-box flex column flex-wrap space-around">
+                <input id="user-text" placeholder="your text here" type="text" onkeyup="onTextType(event)" />
+                <div class="control-box-text">
+                    <button class="larger-font" onclick="changFontSize(this)">&#43;</button>
+                    <button class="smaller-font" onclick="changFontSize(this)">&#8722;</button>
+                    <button class="next-line" onclick="onChangeLine()">Next Line</button>
+                    <button class="left" onclick="onMoveText(this)">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button class="center" onclick="onMoveText(this)">
+                        <i class="fas fa-align-center"></i>
+                    </button>
+                    <button class="right" onclick="onMoveText(this)">
+                        <i class="fas fa-align-right"></i>
+                    </button>
+                </div>
+                <div class="control-box-text-style">
+                    <button class="shadow" onclick="addShadow()">Shadow</button>
+
+                    <input class="jscolor" value="Choose color" onchange="onColorChange(this.value)">
+
+
+                </div>
+
+                <a class="download-link" onclick="downloadCanvas(this)">Download</a>
+                <!-- <div class="fb-share-button" data-href="http://ca-upload.com/here/serveForShare.php" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> -->
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+    <footer>
+
+
+    </footer>
+
+
+
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jscolor.js"></script>
+    <script src="js/utils-service.js"></script>
+    <script src="js/meme-service.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
