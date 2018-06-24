@@ -80,7 +80,7 @@ function setMemeLine(text) {
 
 function setMemeColor(color) {
 
-    gMeme.txts[gMeme.txts.length - 1].color = '#' + color
+    gMeme.txts[gCurrLine].color = '#' + color
 }
 
 function getMeme() {

@@ -45,7 +45,7 @@ function drawCanvas() {
 }
 
 function renderCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   var id = getMemeImgId();
   var image = getImgById(id)
   drawImage(image)
