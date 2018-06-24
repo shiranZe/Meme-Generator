@@ -186,19 +186,21 @@ function handleClick(ev) {
   for (var i = 0; i < currMeme.txts.length; i++) {
 
     var txt = currMeme.txts[i]
+    console.log('line cord', txt.x, txt.y)
 
     if (
-      ev.clientX > txt.x + 150 &&
-      ev.clientX < txt.x + canvas.width &&
-      ev.clientY > txt.y &&
-      ev.clientY < txt.y + 100) {
+      ev.offsetX > txt.x / 2 &&
+      ev.offsetX < txt.x + canvas.width &&
+      ev.offsetY < txt.y &&
+      ev.offsetY > txt.y - txt.size) {
 
-      currLine = currMeme.txts[i]
+      currLine = txt
       document.querySelector('#user-text').value = currLine.line
-      console.log(currLine.x, currLine.y)
+      console.log('click cord', ev.offsetX, ev.offsetY)
+      console.log('line cord', currLine.x, currLine.y)
       gCurrLine = i;
       console.log(gCurrLine)
- 
+
       renderCanvas()
 
     }
@@ -257,7 +259,7 @@ function onSubmit(ev) {
 
 function toggleMenu() {
   document.querySelector('.main-menu').classList.toggle('open')
-  document.querySelector('.humburger').classList.toggle('humburger-open');
+  document.querySelector('.menu-btn').classList.toggle('menu-btn-open');
 
 }
 

@@ -117,10 +117,10 @@ function getImagesToDisplay(strFliter) {
     } else {
         gImgs.forEach(function (img) {
             img.keywords.forEach(function (keyword) {
-                for (var i = 0; i < img.keywords.length; i++) {
-                    if (img.keywords[i] === strFliter) imgs.push(img)
+                // for (var i = 0; i < img.keywords.length; i++) {
+                    if (keyword === strFliter) imgs.push(img)
 
-                }
+                // }
             })
         })
     }
