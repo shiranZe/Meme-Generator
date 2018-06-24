@@ -14,28 +14,33 @@ function renderGallery(images) {
   var strHtml = images.map(function (img) {
     return `
     <div class="gallery-img" 
-    style="background-image: url(${img.url})" onclick="showEditor(${img.id})"></div> `
+    style="background-image: url(${img.url})" onclick="setEditor(${img.id})"></div> `
   });
 
   document.querySelector('.gallery').innerHTML = strHtml.join('');
 }
 
 
-function showEditor(imgId) {
-
+function setEditor(imgId) {
+  gCurrLine = 0
   initMeme()
-  document.querySelector('#user-text').value = ''
   setMeme(imgId)
+  showEditor()
+  drawCanvas()
+  renderCanvas()
+}
 
-  document.querySelector('.gallery-container').classList.add('.gallery-hide')
+
+
+function showEditor() {
+  document.querySelector('.keywords').style.display = 'none'
+  document.querySelector('#user-text').value = ''
   document.querySelector('.gallery-container').style.display = 'none'
   document.querySelector('.meme-container').style.display = 'block'
   document.querySelector('.back').style.display = "block"
   document.querySelector('#about').style.display = 'none'
   document.querySelector('.contact').style.display = 'none'
   document.querySelector('nav').style.display = 'none'
-  drawCanvas()
-  renderCanvas()
 }
 
 function drawCanvas() {
@@ -45,7 +50,7 @@ function drawCanvas() {
 }
 
 function renderCanvas() {
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   var id = getMemeImgId();
   var image = getImgById(id)
   drawImage(image)
@@ -101,8 +106,7 @@ function drawText() {
   for (var i = 0; i < currMeme.txts.length; i++) {
     var txt = currMeme.txts[i]
     if (txt.align == 'center') txt.x = canvas.width / 2;
-    if (txt.align === 'right') txt.x = canvas.width;
-    if (txt.align === 'left') txt.x = 0;
+
     if (txt.shadow === true) {
 
       ctx.shadowOffsetX = 5;
@@ -117,29 +121,19 @@ function drawText() {
     ctx.font = txt.size + 'px ' + txt.font;
     ctx.fillStyle = txt.color;
     ctx.textAlign = txt.align;
-    ctx.strokeText(txt.line, txt.x, canvas.height * txt.y);
+    ctx.strokeStyle = "black";
     ctx.fillText(txt.line, txt.x, txt.y);
+    ctx.strokeText(txt.line, txt.x, txt.y);
 
   }
 }
 
-
-
-function changFontSize(elSymbol) {
-  var currMeme = getMeme()
+function onFontSizeChange(elSymbol) {
   var symbol = elSymbol.innerHTML
-  for (var i = 0; i < currMeme.txts.length; i++) {
-    var txt = currMeme.txts[i]
-    var fontSize = null
-    if (symbol === '+') fontSize = txt.size + 10
-    else fontSize = txt.size - 10
-    ctx.font = fontSize + 'px' + txt.font;
-    txt.size = fontSize
-  }
+  changFontSize(symbol)
   renderCanvas()
-
-
 }
+
 
 function onColorChange(color) {
 
@@ -170,7 +164,6 @@ function renderFilter() {
   var strHtml = `<option value="All">`
 
   keywords.forEach(function (keyword) {
-    console.log(keyword)
     strHtml += `<option value="${keyword}">`
   })
 
@@ -178,42 +171,37 @@ function renderFilter() {
 }
 
 function handleClick(ev) {
-  console.log(ev)
+
   var currMeme = getMeme()
   var elCanvas = document.querySelector('#myCanvas')
-  var currLine = 0;
 
   for (var i = 0; i < currMeme.txts.length; i++) {
 
     var txt = currMeme.txts[i]
-    console.log('line cord', txt.x, txt.y)
-
     if (
       ev.offsetX > txt.x / 2 &&
       ev.offsetX < txt.x + canvas.width &&
       ev.offsetY < txt.y &&
       ev.offsetY > txt.y - txt.size) {
 
-      currLine = txt
-      document.querySelector('#user-text').value = currLine.line
-      console.log('click cord', ev.offsetX, ev.offsetY)
-      console.log('line cord', currLine.x, currLine.y)
-      gCurrLine = i;
-      console.log(gCurrLine)
+      document.querySelector('#user-text').value = txt.line
 
+      updateCurrLine(i)
       renderCanvas()
 
     }
   }
 }
+function onFontStyleChange(font) {
+
+  changFontStyle(font)
+  renderCanvas()
+}
 
 
-function onMoveText(ElIcon) {
+function onMoveText(strDirection) {
 
-  if (ElIcon.classList[0] === 'left') setMemeCords('left')
-  if (ElIcon.classList[0] === 'right') setMemeCords('right')
-  if (ElIcon.classList[0] === 'center') setMemeCords('center')
-
+  setMemeCords(strDirection)
   renderCanvas()
 }
 
@@ -223,13 +211,13 @@ function addShadow() {
 }
 
 function goBack() {
+  document.querySelector('.keywords').style.display = 'block'
   document.querySelector('.back').style.display = 'none'
   document.querySelector('.gallery-container').style.display = 'flex'
   document.querySelector('.meme-container').style.display = 'none'
-  document.querySelector('#about').style.display = 'flex'
+  document.querySelector('#about').style.display = 'block'
   document.querySelector('.contact').style.display = 'flex'
   document.querySelector('nav').style.display = 'flex'
-
 
 }
 

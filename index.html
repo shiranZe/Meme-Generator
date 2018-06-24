@@ -12,8 +12,8 @@
 <body onload="init()">
 
     <header>
-        <div class="containers header-container flex space-between align-center">
-            <div class="back" onclick="goBack()">&#8592;</div>
+        <div class="containers header-container flex space-around align-center">
+            <div class="back hvr-push" onclick="goBack()">&#8592;</div>
             <h1>The Ultimate Meme Generator</h1>
 
 
@@ -37,25 +37,26 @@
 
     <main class="container">
         <div id="gallery">
+            <div class="keywords">
+                <ul class="keywords-list clean-list flex center flex-wrap">
+                    <li>
+
+                    </li>
+                </ul>
+
+            </div>
             <div class="gallery-container container flex column space-between">
-                <div class="filter">Choose Your Meme!
+                <div class="filter">Search For Meme
                     <input class="input" list="keywords" oninput="setFilter(this.value)">
                     <datalist id="keywords">
 
                     </datalist>
                 </div>
-               
+
                 <div class="gallery flex flex-wrap">
 
                 </div>
-                <div class="keywords">
-                    <ul class="keywords-list clean-list flex flex-wrap">
-                        <li>
 
-                        </li>
-                    </ul>
-
-                </div>
             </div>
         </div>
         <div id="about">
@@ -94,12 +95,12 @@
                 <h3>Contact Me
                 </h3>
                 <div class="flex align-center">
-                    Your Email
-                    <input class="email" type="email" placeholder="name@example.com">
+                  
+                    <input class="email" type="email" placeholder="Your Email">
                 </div>
 
 
-                <textarea class="msg" rows="4" cols="50" placeholder="Type your message"></textarea>
+                <textarea class="msg" rows="4" cols="25" placeholder="Type your message"></textarea>
                 <button type="submit" onclick="onSubmit(event)">Submit</button>
             </div>
 
@@ -112,7 +113,7 @@
 
     <div class="meme-container">
         <div class="meme-item container flex align-center space-around flex-wrap">
-          
+
             <div class="canvas-container">
                 <canvas id="myCanvas" width="500" height="400" onclick="handleClick(event)">
 
@@ -120,9 +121,6 @@
                 <div class="download">
                     <a class="download-link" onclick="downloadCanvas(this)">Download</a>
                 </div>
-                <!-- <div class="upload">
-                        <input id="fileInput" type="file" onchange="handleUpload()" />
-                    </div> -->
             </div>
 
 
@@ -134,23 +132,38 @@
                     <div class="next-line" onclick="onChangeLine()">Next Line</div>
                 </div>
                 <div class="control-box-text flex space-between">
-                    <div class="larger-font" onclick="changFontSize(this)">&#43;</div>
-                    <div "smaller-font" onclick="changFontSize(this)">&#8722;</div>
+                    <div class="larger-font" onclick="onFontSizeChange(this)">&#43;</div>
+                    <div "smaller-font" onclick="onFontSizeChange(this)">&#8722;</div>
 
-                    <div class="left" onclick="onMoveText(this)">
+                    <div class="left" onclick="onMoveText('left')">
                         <i class="fas fa-align-left"></i>
                     </div>
-                    <div class="center" onclick="onMoveText(this)">
+                    <div class="center" onclick="onMoveText('center')">
                         <i class="fas fa-align-center"></i>
                     </div>
-                    <div class="right" onclick="onMoveText(this)">
+                    <div class="right" onclick="onMoveText('right')">
                         <i class="fas fa-align-right"></i>
                     </div>
+
+                    <div class="up" onclick="onMoveText('up')">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="down" onclick="onMoveText('down')">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
                 </div>
-                <div class="control-box-style flex align-center">
+                <div class="control-box-style flex column align-center">
                     <div class="shadow" onclick="addShadow()">Shadow on/off</div>
-                 
-                    <input class="jscolor" value="Choose color" onchange="onColorChange(this.value)">
+
+                    <input class="jscolor" placeholder="white" onchange="onColorChange(this.value)">
+                    <div class="font-select">
+                        Font:
+                        <select class="font" onchange="onFontStyleChange(this.value)">
+
+                            <option value="impact">Impact</option>
+                            <option value="arial">Arial</option>
+                        </select>
+                    </div>
 
 
                 </div>
